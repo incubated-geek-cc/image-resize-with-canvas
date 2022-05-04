@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang='en' class='notranslate' translate='no'>
+      <head>
+        <meta name='google' content='notranslate' />
+        <meta charset='UTF-8'>
+        <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+        <meta http-equiv="Pragma" content="no-cache" />
+        <meta http-equiv="Expires" content="0" />
+        <meta name='description' content='Generic web application which resizes an image via canvas element.'>
+        <meta name='keywords' content='JavaScript,CSS,Bootstrap,HTML,Image,Resize,Canvas'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name='viewport' content='width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0' />
+        <meta http-equiv='X-UA-Compatible' content='IE=Edge,chrome=1' />  
+        <meta http-equiv='Content-Language' content='en' />
+        <title>Image Resizer | Preserves Aspect Ratio with Canvas</title>
+        <meta name='msapplication-TileColor' content='#ffffff' />
+        <meta name='theme-color' content='#ffffff' />
+        <meta name='apple-mobile-web-app-status-bar-style' content='black-translucent' />
+        <meta name='apple-mobile-web-app-capable' content='yes' />
+        <meta name='mobile-web-app-capable' content='yes' />
+        <meta name='HandheldFriendly' content='True' />
+        <meta name='MobileOptimized' content='320' />  
+        <meta http-equiv='Content-Security-Policy' content='upgrade-insecure-requests' />
+        <link href='css/bootstrap-4.5.2.min.css' rel='stylesheet' type='text/css' />
+        <link href='css/offcanvas.css' rel='stylesheet' type='text/css' />
+        <link rel='icon' href='img/favicon-16x16.png' type='image/x-icon'>
+        <style>
+            html,body {
+              padding:0;
+              margin:0;
+            }
+            body {
+                padding: calc(0.45em + 50px) 0;
+                margin:0;
+                height:100vh;
+                width:100vw;
+                overflow-x: hidden;
+                overflow-y:auto;
+            }
+            input[type=file] {
+              display:none;
+            }
+            .table td, .table th {
+                padding: 0.25rem;
+                vertical-align: middle;
+            }
+            .custom-card-title {
+                font-variant: all-petite-caps;
+            }
+            #canvasDisplayCell,
+            #canvasDisplay {
+                vertical-align: middle;
+                background:transparent;
+            }
+            #canvasDisplayCell {
+                display: inline-block;
+                height:calc( (1.5em + .5rem + 2px) * 2 );
+                overflow:auto;
+            }
+            .previewedImage {
+                border: 1px dotted #6c757d;
+                height: calc(100vh - 1.375rem - 110px - 1.8em);
+                margin: 1px auto;
+                overflow: auto;
+            }
+            #copyrightBanner {
+                box-shadow: rgb(0 0 0 / 16%) 0px 10px 36px 0px, rgb(0 0 0 / 6%) 0px 0px 0px 1px;
+                padding: 0.45rem 0.35rem;
+                margin-block-start: 0;
+                margin-block-end: 0;
+                position: absolute;
+                z-index: 50;
+                top: 0;
+                width: 100vw;
+            }
+            .noselect {
+              -webkit-touch-callout: none; /* iOS Safari */
+                -webkit-user-select: none; /* Safari */
+                 -khtml-user-select: none; /* Konqueror HTML */
+                   -moz-user-select: none; /* Old versions of Firefox */
+                    -ms-user-select: none; /* Internet Explorer/Edge */
+                        user-select: none; /* Non-prefixed version, currently
+                                              supported by Chrome, Edge, Opera and Firefox */
+            }
+        </style>
+      </head>
+      <body class='noselect'>
+        <noscript>You need to enable JavaScript to run this app.</noscript>
+        <p id="copyrightBanner">© Copyright <span id="yearDisplay"></span> | Created by <a href="https://medium.com/@geek-cc" target="_blank">the Girl with a ribbon</a> ξ(🎀˶❛◡❛) | ⧉ Image Resizer — Browser Utility Tool | ☁🚫 Works Offline</p>
+
+        <div class='container-fluid'>
+            <div class='row'>
+                <div class='col-sm-4 col-12'>
+                  <div class="card rounded-0 h-100">
+                    <div class="card-header p-1"><button id='uploadFileBtn' class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1'>📂 <small>Upload Image…</small><input id='uploadFile' type='file' accept='image/*' /></button>
+                    </div>
+                    <div class="card-body p-1">
+                        <table class='table table-bordered table-condensed w-100 small mb-0 text-left'>
+                            <tr>
+                                <th width='70%'><small class='lead small'><strong>Name</strong></small></th>
+                                <td id='fileName' class='small'></td>
+                            </tr>
+                            <tr>
+                                <th><small class='lead small'><strong>Last Modified</strong></small></th>
+                                <td id='lastModified' class='small'></td>
+                            </tr>
+                            <tr>
+                                <th><small class='lead small'><strong>Size</strong></small></th>
+                                <td id='fileSize' class='small'></td>
+                            </tr>
+                            <tr>
+                                <th><small class='lead small'><strong>Original Dimensions</strong></small> <small class='text-muted'>Width <strong>×</strong> Height</small></th>
+                                <td id='imgDimensions' class='small'></td>
+                            </tr>
+                            <tr>
+                                <th><small class='lead small'><strong>Type</strong></small></th>
+                                <td id='fileType' class='small'></td>
+                            </tr>
+                        </table>
+                        <hr>
+
+                        <big><u><div class='custom-card-title'>📝 Guidelines to Resize Image 🖼</div></u></big>
+
+                        <div class='custom-card-title'>❶ Upload an image file by selecting: </div>❝📂 <small class='text-primary'>Upload Image…</small>❞
+                        <div class='custom-card-title'>❷ Proceed to specify preferred dimensions: </div><small><mark>Note: Image's original aspect ratio is preserved.</mark></small>
+                        <div class='custom-card-title'>❸ Finally, save <strong>⛶</strong> resized image by selecting: </div>❝<small class='text-primary'>💾 Save Resized Image…</small>❞
+
+                    </div>
+                  </div>
+                </div>
+
+
+                 <div class='col-sm-8 col-12'>
+                  <div class="card rounded-0 h-100">
+                    <div class="card-header p-1">📏 <span class='small'><small class='text-primary'>Width</small><input id='resizedImgW' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small> <strong class='text-primary'>×</strong> <small class='text-primary'>Height</small><input id='resizedImgH' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small></span> <button id='saveImageBtn' type='button' class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1 float-right'><small>💾 Save Resized Image…</small></button></div>
+                    <div class="card-body p-0">
+                        <div id='previewUploadedImage' class='previewedImage p-0 w-100'></div>
+                    </div>
+                 </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <script src='js/polyfill.js'></script>
+        <script src='js/ie10-viewport-bug-workaround.js'></script>
+        <script src='js/bootstrap-native-v4.js'></script>
+        <script>
+            if (document.readyState === 'complete' || document.readyState !== 'loading' && !document.documentElement.doScroll) {
+                callback();
+            } else {
+                document.addEventListener('DOMContentLoaded', async() => {
+                    console.log('DOMContentLoaded');
+
+                    const yearDisplay=document.getElementById('yearDisplay');
+                    yearDisplay.innerHTML=new Date().getFullYear();
+
+                    const byteToKBScale = 0.0009765625;
+                    // window.devicePixelRatio = 3.0;
+                    const scale = window.devicePixelRatio*2;
+                    const requiredSize=350;
+
+                    var _CANVAS, _IMG, imgH=0, imgW=0, _ZOOM_FACTOR=1.0;
+
+                    var resizedImgH=document.getElementById('resizedImgH');
+                    var resizedImgW=document.getElementById('resizedImgW');
+
+                    var previewUploadedImage=document.getElementById('previewUploadedImage');
+                    var saveImageBtn=document.getElementById('saveImageBtn');
+                    
+                    var fileName=document.getElementById('fileName');
+                    var fileSize=document.getElementById('fileSize');
+                    var imgDimensions=document.getElementById('imgDimensions');
+                    var fileType=document.getElementById('fileType');
+                    var lastModified=document.getElementById('lastModified');
+
+                    var uploadFileBtn=document.getElementById('uploadFileBtn');
+                    var uploadFile=document.getElementById('uploadFile');
+
+                    uploadFileBtn.addEventListener('click', ()=> {
+                        let clickEvent = new MouseEvent('click', { view: window, bubbles: false, cancelable: false });
+                        uploadFile.dispatchEvent(clickEvent);
+                    }, false);
+
+                    saveImageBtn.addEventListener('click', (evt)=> {
+                        let downloadLink=document.createElement('a');
+                        downloadLink.href=saveImageBtn.value;
+
+                        let fileExt=(fileType.innerText).split('/')[1];
+                        let saveFileName=fileName.innerText.replace(`.${fileExt}`,'');
+                        downloadLink.download=`${saveFileName}-${resizedImgW.value}x${resizedImgH.value}.${fileExt}`;
+                        downloadLink.click();
+                    }, false);
+
+                    function readFileAsDataURL(file) {
+                        return new Promise((resolve,reject) => {
+                            let fileredr = new FileReader();
+                            fileredr.onload = () => resolve(fileredr.result);
+                            fileredr.onerror = () => reject(fileredr);
+                            fileredr.readAsDataURL(file);
+                        });
+                    }
+
+                    function scaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR, imgH, imgW, scale) {
+                        _CANVAS['style']['width'] = `${imgW}px`;
+                        _CANVAS['style']['height'] = `${imgH}px`;
+                        _CANVAS['style']['border'] = '1px dashed #6c757d';
+                        _CANVAS['style']['margin'] = '0 auto';
+                        _CANVAS['style']['display'] = 'flex';
+                        let cWidth=_ZOOM_FACTOR*imgW*scale;
+                        let cHeight=_ZOOM_FACTOR*imgH*scale;
+
+                        _CANVAS.width=cWidth;
+                        _CANVAS.height=cHeight;
+
+                        resizedImgW.value=parseInt(cWidth);
+                        resizedImgH.value=parseInt(cHeight);
+
+                        _CANVAS.getContext('2d').scale(scale, scale);
+                        _CANVAS.getContext('2d').drawImage(_IMG, 0, 0, imgW*_ZOOM_FACTOR, imgH*_ZOOM_FACTOR);
+                        saveImageBtn.value=_CANVAS.toDataURL();
+                    }
+                    function reverseScaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR, cHeight, cWidth, scale) {
+                        _CANVAS.width=cWidth;
+                        _CANVAS.height=cHeight;
+
+                        let imgW=parseFloat(cWidth/_ZOOM_FACTOR)/scale;
+                        let imgH=parseFloat(cHeight/_ZOOM_FACTOR)/scale;
+
+                        _CANVAS['style']['width'] = `${imgW}px`;
+                        _CANVAS['style']['height'] = `${imgH}px`;
+                        _CANVAS['style']['border'] = '1px dashed #6c757d';
+                        _CANVAS['style']['margin'] = '0 auto';
+                        _CANVAS['style']['display'] = 'flex';
+                        
+                        _CANVAS.getContext('2d').scale(scale, scale);
+                        _CANVAS.getContext('2d').drawImage(_IMG, 0, 0, imgW*_ZOOM_FACTOR, imgH*_ZOOM_FACTOR);
+
+                        saveImageBtn.value=_CANVAS.toDataURL();
+                    }
+
+                    resizedImgW.addEventListener('change', (evtW)=> {
+                        let cWidth=evtW.target.valueAsNumber;
+                        let cHeight=parseFloat(cWidth/_CANVAS.width)*_CANVAS.height;
+
+                        resizedImgH.value=parseInt(cHeight);
+                        reverseScaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR, cHeight, cWidth, scale);
+                    }, false);
+                    resizedImgH.addEventListener('change', (evtH)=> {
+                        let cHeight=evtH.target.valueAsNumber;
+                        let cWidth=parseFloat(cHeight/_CANVAS.height)*_CANVAS.width;
+
+                        resizedImgW.value=parseInt(cWidth);
+                        reverseScaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR, cHeight, cWidth, scale);
+                    }, false);
+
+                    const loadImage = (url) => new Promise((resolve, reject) => {
+                      const img = new Image();
+                      img.addEventListener('load', () => resolve(img));
+                      img.addEventListener('error', (err) => reject(err));
+                      img.src = url;
+                    });
+
+                    const millisecondsToDatetimeStr = (milliseconds) => {
+                        const dateObject = new Date(milliseconds);
+
+                        const dateYear=dateObject.getFullYear();
+                        const dateMonth=(((dateObject.getMonth()+1))<10) ? `0${((dateObject.getMonth()+1))}` : ((dateObject.getMonth()+1));
+                        const dateDay=((dateObject.getDate())<10) ? `0${(dateObject.getDate())}` : (dateObject.getDate());
+
+                        const datetimeHours=(((dateObject.getHours()))<10) ? `0${((dateObject.getHours()))}` : ((dateObject.getHours()));
+                        const datetimeMinutes=(((dateObject.getMinutes()))<10) ? `0${((dateObject.getMinutes()))}` : ((dateObject.getMinutes()));
+                        const datetimeSeconds=(((dateObject.getSeconds()))<10) ? `0${((dateObject.getSeconds()))}` : ((dateObject.getSeconds()));
+
+                        const datetimeStr=`${dateYear}-${dateMonth}-${dateDay} ${datetimeHours}:${datetimeMinutes}:${datetimeSeconds}`;
+
+                        return datetimeStr;
+                    };
+
+                    uploadFile.addEventListener('change', async (evt) => {
+                        let file = evt.currentTarget.files[0];
+                        if(!file) return;
+
+                        fileName.innerHTML=file.name;
+                        fileSize.innerHTML=`${(parseFloat(file.size) * byteToKBScale).toFixed(2)} 🇰🇧`;
+                        fileType.innerHTML=file.type;
+                        lastModified.innerHTML=millisecondsToDatetimeStr(file.lastModified);
+
+                        let b64str = await readFileAsDataURL(file);
+                        _IMG = await loadImage(b64str);
+
+                        // set sizes in memory
+                        imgH=_IMG.naturalHeight;
+                        imgW=_IMG.naturalWidth;
+                        imgDimensions.innerHTML=`${imgW}px × ${imgH}px`;
+
+                        _IMG['style']['height']=`${imgH}px`;
+                        _IMG['style']['width']=`${imgW}px`;
+
+                        _CANVAS=document.createElement('canvas');
+                        scaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR,imgH, imgW, scale);
+                        previewUploadedImage.appendChild(_CANVAS);
+
+                        // display size
+                        const sizeBenchmark = Math.min(imgW, imgH);
+                        _ZOOM_FACTOR=requiredSize/parseFloat(sizeBenchmark);
+
+                        let displayedHeight=parseInt(_ZOOM_FACTOR*imgH);
+                        let displayedWidth=parseInt(_ZOOM_FACTOR*imgW);
+                        _IMG['style']['height']=`${displayedHeight}px`;
+                        _IMG['style']['width']=`${displayedWidth}px`;
+
+                        scaleCanvas(_CANVAS, _IMG, _ZOOM_FACTOR,displayedHeight, displayedWidth, scale);
+                    }, false);
+                });
+            }
+        </script>
+      </body>
+</html>
