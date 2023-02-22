@@ -1,22 +1,37 @@
-# image-resize-with-canvas
-### An offline non-server dependent utility to resize image files (e.g. .png, .jpg) with HTML5 canvas with 100% client-side JavaScript.
+<div align="center">
+  <img src="https://github.com/incubated-geek-cc/OfflinePDFViewer/raw/main/img/logo.png" width="96" alt="logo">
 
-![Overview](https://miro.medium.com/max/1050/1*Duxvrd0tozc_2CN4jNaSBg.png)
+  # 🔎 Image Resize (with HTML Canvas)
 
-<strong>(1)</strong> Upload image<br>
-<strong>(2)</strong> Resize image<br>
-<strong>(3)</strong> Save resized output<br>
+  ### 🛠️ An offline non-server dependent utility to resize image files (e.g. .png, .jpg) with HTML5 canvas with.
 
-### Running the tool
+**💻 100% Vanilla JavaScript. No external plugins required.**
 
-* No server required
-* Just double-click the HTML file to run it on any JavaScript-enabled browser
+<div align="left">
 
-### Demo
-![Demo](https://miro.medium.com/max/900/1*2hemoduuBq2AbJR1kLlwRA.gif)
+  ### 📌 Features
+
+</div>
+<div align="left">
+	<ul>
+		<li>Upload image file</li>
+		<li>Resize image resolution (enables image to keep aspect ratio the same)</li>
+		<li>Export resized image output</li>
+	</ul>
+</div>
+</div>
+
+### 🌟 Try it yourself!
+[**Live Demo :: Link**](https://incubated-geek-cc.github.io/OfflinePDFViewer)
+
+### ✍ Read related post here
+[**Article :: Link**](https://geek-cc.medium.com/how-to-resize-an-image-using-client-side-javascript-and-html5-canvas-2fff73d15d0)
+
+### 👀 Preview
+<img src='https://miro.medium.com/max/1050/1*Duxvrd0tozc_2CN4jNaSBg.png' width="800px" />
+
+<p>— <b>Join me on 📝 <b>Medium</b> at <a href='https://medium.com/@geek-cc' target='_blank'>~ ξ(🎀˶❛◡❛) @geek-cc</a></b></p>
 
 ---
 
-### Related Content
-
-* Article published at [How to Resize an Image using Client-Side JavaScript and HTML5 Canvas](https://geek-cc.medium.com/how-to-resize-an-image-using-client-side-javascript-and-html5-canvas-2fff73d15d0)
+#### 🌮 Please buy me a <a href='https://www.buymeacoffee.com/geekcc' target='_blank'>Taco</a>! 😋
