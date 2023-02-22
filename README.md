@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="https://github.com/incubated-geek-cc/OfflinePDFViewer/raw/main/img/logo.png" width="96" alt="logo">
+  <img src="https://github.com/incubated-geek-cc/image-resize-with-canvas/raw/main/img/logo.png" width="96" alt="logo">
 
   # 🔎 Image Resize (with HTML Canvas)
 
@@ -22,7 +22,7 @@
 </div>
 
 ### 🌟 Try it yourself!
-[**Live Demo :: Link**](https://incubated-geek-cc.github.io/OfflinePDFViewer)
+[**Live Demo :: Link**](https://incubated-geek-cc.github.io/image-resize-with-canvas)
 
 ### ✍ Read related post here
 [**Article :: Link**](https://geek-cc.medium.com/how-to-resize-an-image-using-client-side-javascript-and-html5-canvas-2fff73d15d0)
