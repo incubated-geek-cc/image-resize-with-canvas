@@ -1,7 +1,7 @@
 <div align="center">
   <img src="https://github.com/incubated-geek-cc/image-resize-with-canvas/raw/main/img/logo.png" width="96" alt="logo">
 
-  # 🔎 Image Resize (with HTML Canvas)
+  # 📐 Image Resize (with HTML Canvas)
 
   ### 🛠️ An offline non-server dependent utility to resize image files (e.g. .png, .jpg) with HTML5 canvas with.
 
