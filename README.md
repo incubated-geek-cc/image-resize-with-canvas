@@ -25,7 +25,7 @@
 [**Live Demo :: Link**](https://incubated-geek-cc.github.io/image-resize-with-canvas)
 
 ### ✍ Read related post here
-[**Article :: Link**](https://geek-cc.medium.com/how-to-resize-an-image-using-client-side-javascript-and-html5-canvas-2fff73d15d0)
+[**Article :: Link :: How to Resize an Image using Client-Side JavaScript and HTML5 Canvas**](https://geek-cc.medium.com/how-to-resize-an-image-using-client-side-javascript-and-html5-canvas-2fff73d15d0)
 
 ### 👀 Preview
 <img src='https://miro.medium.com/max/1050/1*Duxvrd0tozc_2CN4jNaSBg.png' width="800px" />
