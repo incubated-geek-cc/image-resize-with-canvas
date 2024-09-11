@@ -34,7 +34,10 @@
             <div class='row'>
                 <div class='col-sm-4 col-12'>
                   <div class="card rounded-0 h-100">
-                    <div class="card-header p-1"><button id='uploadFileBtn' class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1'>📂 <small>Upload Image…</small><input id='uploadFile' type='file' accept='image/*' /></button>
+                    <div class="card-header p-1">
+                        <label for="uploadFile" class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1'>
+                            📂 <small>Upload Image…</small><input id='uploadFile' type='file' accept='image/*' />
+                        </label>
                     </div>
                     <div class="card-body p-1">
                         <table class='table table-bordered table-condensed w-100 small mb-0 text-left'>
@@ -73,12 +76,21 @@
 
 
                  <div class='col-sm-8 col-12'>
-                  <div class="card rounded-0 h-100">
-                    <div class="card-header p-1">📏 <span class='small'><small class='text-primary'>Width</small><input id='resizedImgW' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small> <strong class='text-primary'>×</strong> <small class='text-primary'>Height</small><input id='resizedImgH' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small></span> <button id='saveImageBtn' type='button' class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1 float-right'><small>💾 Save Resized Image…</small></button></div>
-                    <div class="card-body p-0">
-                        <div id='previewUploadedImage' class='previewedImage p-0 w-100'></div>
+                    <div class="card rounded-0 h-100">
+                        <div class="card-header p-1">
+                            <div class="custom-control custom-switch mt-0 mb-1 ml-1 mr-2 float-left">
+                                <input id="equalAspectRatio" type="checkbox" class="custom-control-input" checked=""> <label class="custom-control-label" for="equalAspectRatio"><span class="custom-card-title custom-old-style-num"><span class="unicode">ᵃˢᵖᵉᶜᵗ ʳᵃᵗⁱᵒ 1∶1</span></span></label>
+                            </div>
+
+                            📏 <span class='small'><small class='text-primary'>Width</small><input id='resizedImgW' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small> <strong class='text-primary'>×</strong> <small class='text-primary'>Height</small><input id='resizedImgH' type='number' step='1' class='rounded-0 border border-primary text-primary ml-1 mr-1 mb-0 mt-0' /><small class='text-primary'>px</small></span> 
+
+                            <button id='saveImageBtn' type='button' class='btn btn-sm btn-light border-primary text-primary rounded-0 m-0 pt-0 pb-0 pl-1 pr-1 float-right'><small>💾 Save Resized Image…</small></button>
+
+                        </div>
+                        <div class="card-body p-0">
+                            <div id='previewUploadedImage' class='previewedImage p-0 w-100 text-center'></div>
+                        </div>
                     </div>
-                 </div>
                 </div>
 
 
