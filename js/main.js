@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', async() => {
 
     const uploadFile=document.getElementById('uploadFile');
     
-    previewUploadedImage['style']['height'] = `calc(${previewUploadedImage.parentElement.clientHeight}px - 4px - 0.25rem - 0.25rem - 0.8rem - 4px)`;
+    // previewUploadedImage['style']['height'] = `calc(${previewUploadedImage.parentElement.clientHeight}px - 4px - 0.25rem - 0.25rem - 0.8rem - 4px)`;
 
     saveImageBtn.addEventListener('click', (evt)=> {
         let downloadLink=document.createElement('a');
